@@ -1,0 +1,15 @@
+[package]
+name = "lyra"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4"
+dotenv = "0.15.0"
+juniper = "0.15.9"
+r2d2 = "0.8.9"
+serde = "1"
+diesel = { version = "1", features = ["postgres"] }
+openssl = "*"

@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+
+  pgsql:
+    environment:
+      PGPASSWORD: '${POSTGRES_PASSWORD}'
+      POSTGRES_USER: '${POSTGRES_USER:-postgres}'
+      POSTGRES_DB: '${POSTGRES_DB:-lyra_db}'
+      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD:-secret}'
+    image: postgres:latest
+    volumes:
+        - 'lyrapsql:/var/lib/postgresql/data'
+    ports:
+      - "5432:5432"
+    networks:
+        - lyra
+
+  actix-api:
+    restart: on-failure
+    depends_on:
+      - pgsql
+    build:
+        context: ./
+        dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/${POSTGRES_DB}"
+    ports:
+      - "8080:8080"
+    networks:
+      - lyra
+
+networks:
+    lyra:
+        driver: bridge
+volumes:
+    lyrapsql:
+        driver: local
