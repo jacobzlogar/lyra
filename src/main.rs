@@ -4,7 +4,7 @@ extern crate diesel;
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
 
 async fn accounts() -> impl Responder {
-    "Accounts"
+    return accounts::index();
 }
 
 async fn blocks() -> impl Responder {
